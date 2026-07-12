@@ -272,18 +272,21 @@ else
 fi
 
 # ------------------------------------------------------------------ locate install.sh
-# Prefer a sibling install.sh (repo checkout / co-published dir); otherwise fetch the
-# stable script from the CDN. Its integrity rests on TLS to our CDN — the same trust as
-# this bootstrap script itself; the SECURITY-critical root is AGENT_SHA256, which
-# install.sh re-checks against the binary before running it.
+# Prefer a sibling install.sh (repo checkout); otherwise fetch it from the SAME independent
+# channel this bootstrap script came from — the public Distribrute/install repo over GitHub TLS,
+# NOT the release CDN. #10: install.sh is part of the trust root (it authenticates the binary +
+# package signature before anything runs), so it must ride the same off-CDN trust as this script;
+# fetching it from the CDN would hand a CDN attacker a verifier that could simply skip the checks.
+SCRIPT_BASE="${DISTRIBRUTE_SCRIPT_BASE:-https://raw.githubusercontent.com/Distribrute/install/main}"
+SCRIPT_BASE="${SCRIPT_BASE%/}"
 if [ -n "${DISTRIBRUTE_INSTALL_SH:-}" ]; then
   INSTALL_SH="$DISTRIBRUTE_INSTALL_SH"
 elif [ -n "$SELF_DIR" ] && [ -f "$SELF_DIR/install.sh" ]; then
   INSTALL_SH="$SELF_DIR/install.sh"
 else
   INSTALL_SH="$TMP/install.sh"
-  info "fetching installer: $INSTALL_BASE/install.sh"
-  fetch "$INSTALL_BASE/install.sh" "$INSTALL_SH" || die "could not fetch install.sh from $INSTALL_BASE/install.sh"
+  info "fetching installer: $SCRIPT_BASE/install.sh"
+  fetch "$SCRIPT_BASE/install.sh" "$INSTALL_SH" || die "could not fetch install.sh from $SCRIPT_BASE/install.sh"
 fi
 [ -f "$INSTALL_SH" ] || die "installer not found: $INSTALL_SH"
 
