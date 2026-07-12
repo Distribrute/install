@@ -2,16 +2,20 @@
 #
 # Distribrute operator agent — one-command bootstrap.
 #
-#     curl -fsSL https://get.distribrute.com | bash
-#     # or, to keep an interactive token prompt when piping:
-#     bash <(curl -fsSL https://get.distribrute.com)
-#     # or fully non-interactive:
-#     curl -fsSL https://get.distribrute.com | DISTRIBRUTE_ENROLL_TOKEN=<tok> sudo -E bash
+#     curl -fsSL https://raw.githubusercontent.com/Distribrute/install/main/bootstrap.sh | bash
+#     # keep an interactive token prompt when piping:
+#     bash <(curl -fsSL https://raw.githubusercontent.com/Distribrute/install/main/bootstrap.sh)
+#     # fully non-interactive:
+#     curl -fsSL https://raw.githubusercontent.com/Distribrute/install/main/bootstrap.sh | DISTRIBRUTE_ENROLL_TOKEN=<tok> bash
 #
-# This is the STABLE entrypoint. It carries NO baked release values: every per-release
-# value (version, tarball URL + hash, agent binary hash, backend URL, Verify keyring)
-# comes from a small MANIFEST fetched from the CDN. So cutting a new release only
-# re-publishes the manifest + tarball; this script never changes.
+# Fetch this script from the public Distribrute/install repo (GitHub TLS) — NOT the release CDN.
+# That independent channel is what makes the baked Release key a real trust anchor: a compromised
+# CDN can't hand you a bootstrap that skips the checks. Do NOT run it via `curl <cdn> | sudo bash`;
+# it self-escalates with sudo ONLY for the final system install, after the package is verified.
+#
+# This is the STABLE entrypoint. It carries no per-release values (only the stable Release public
+# key): version, tarball URL + hash, agent hash, backend URL, and Verify keyring come from a small
+# signed MANIFEST fetched from the CDN. Cutting a release only re-publishes the manifest + tarball.
 #
 # What it does, all FAIL-CLOSED:
 #   1. preflight  — Linux + x86_64; curl/tar/sha256sum/readelf present; become root.
