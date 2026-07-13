@@ -2,11 +2,11 @@
 #
 # Distribrute operator agent — one-command bootstrap.
 #
-#     curl -fsSL https://raw.githubusercontent.com/Distribrute/install/main/bootstrap.sh | bash
+#     curl -fsSL https://raw.githubusercontent.com/Distribrute/install/v1/bootstrap.sh | bash
 #     # keep an interactive token prompt when piping:
-#     bash <(curl -fsSL https://raw.githubusercontent.com/Distribrute/install/main/bootstrap.sh)
+#     bash <(curl -fsSL https://raw.githubusercontent.com/Distribrute/install/v1/bootstrap.sh)
 #     # fully non-interactive:
-#     curl -fsSL https://raw.githubusercontent.com/Distribrute/install/main/bootstrap.sh | DISTRIBRUTE_ENROLL_TOKEN=<tok> bash
+#     curl -fsSL https://raw.githubusercontent.com/Distribrute/install/v1/bootstrap.sh | DISTRIBRUTE_ENROLL_TOKEN=<tok> bash
 #
 # Fetch this script from the public Distribrute/install repo (GitHub TLS) — NOT the release CDN.
 # That independent channel is what makes the baked Release key a real trust anchor: a compromised
@@ -281,7 +281,7 @@ fi
 # NOT the release CDN. #10: install.sh is part of the trust root (it authenticates the binary +
 # package signature before anything runs), so it must ride the same off-CDN trust as this script;
 # fetching it from the CDN would hand a CDN attacker a verifier that could simply skip the checks.
-SCRIPT_BASE="${DISTRIBRUTE_SCRIPT_BASE:-https://raw.githubusercontent.com/Distribrute/install/main}"
+SCRIPT_BASE="${DISTRIBRUTE_SCRIPT_BASE:-https://raw.githubusercontent.com/Distribrute/install/v1}"
 SCRIPT_BASE="${SCRIPT_BASE%/}"
 if [ -n "${DISTRIBRUTE_INSTALL_SH:-}" ]; then
   INSTALL_SH="$DISTRIBRUTE_INSTALL_SH"

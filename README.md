@@ -8,14 +8,14 @@ compromise of the CDN alone cannot make you install a forged agent.
 ## Install
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/Distribrute/install/main/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Distribrute/install/v1/bootstrap.sh | bash
 ```
 
 You'll be prompted for a one-time enrollment token (mint one in the admin panel). To run
 non-interactively:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/Distribrute/install/main/bootstrap.sh \
+curl -fsSL https://raw.githubusercontent.com/Distribrute/install/v1/bootstrap.sh \
   | DISTRIBRUTE_ENROLL_TOKEN=<token> bash
 ```
 
